@@ -111,6 +111,18 @@ body{
     transition: transform 0.3s ease;
 }
 
+.card .description {
+    display: none;
+    margin-top: 10px;
+    font-size: 0.9rem;
+    color: #555;
+    text-align: left;
+}
+.card.expanded .description {
+    display: block;
+}
+
+
 .card:hover{
     transform: scale(1.03);
 }
