@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zarish-Handcrafted Elegance</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+   <!--Navigation Bar-->
+   <nav class="navbar">
+    <div class="logo">
+        <img src="zarish.jpg" alt="logo image">
+        <span>ZARISH</span>
+    </div>
+    <ul class="nav-links">
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Product</a></li>
+        <li><a href="#">About Us</a></li>
+    </ul>
+    <div class="search-box">
+        <input type="text" placeholder="Search products...">
+        <button>🔍</button>
+    </div>
+   </nav>
+
+   <header class="hero">
+    <h1>Luxurious Handcrafted Brand</h1>
+    <p>Discover heritage and elegance in very stitch</p>
+   </header>
+
+   <!--Featured Products Section-->
+   <section class="products-section">
+    <h2>Featured Products</h2>
+    <div class="card-container" id="card-container">
+        <!--Cards added by JS-->
+    </div>
+   </section>
+   <!--Description Box-->
+   <section id="desc-box" class="desc-box hidden">
+    <h3 id="desc-title"></h3>
+    <p id="desc-text"></p>
+    <button onclick="closeDesc()">Close</button>
+   </section>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,133 @@
+body{
+    margin: 0;
+    font-family: "seoge UI",sans-serif;
+    background: #fdfcfa;
+    color:#333;
+}
+
+.navbar{
+    background:#2d0c34;
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem 2rem;
+    align-items: center;
+    color: white;
+}
+
+.logo{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo img{
+    height: 60px;
+    width: auto;
+    border-radius: 4px;
+}
+
+.logo span{
+    font-size: 1.5rem;
+    font-weight: bold;
+    font-family: 'Georgia',serif;
+    letter-spacing: 1px;
+}
+
+.nav-links{
+    list-style: none;
+    display: flex;
+    gap:60px
+}
+
+.nav-links a{
+    color:white;
+    text-decoration: none;
+}
+
+.search-box{
+    display: flex;
+    gap: 5px;
+}
+
+.search-box input{
+    padding: 8px;
+    border-radius:4px 0 0 4px;
+    border: none;
+}
+
+.search-box button{
+    background:#72026c;
+    color: white;
+    padding:6px 10px;
+    border: none;
+    border-radius: 0 4px 4px 0;
+    cursor: pointer;
+}
+
+.hero{
+    background:#f0e6f3;
+    text-align: center;
+    padding: 1rem 3rem;
+}
+
+.hero h1{
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+.hero p{
+    font-size:1rem;
+    margin-bottom: 20px;
+}
+
+.shop-btn{
+    background-color: #72026c;
+    color: white;
+    padding: 10px 20px;
+    border:none;
+    cursor: pointer;
+    font-size:1rem;
+}
+
+.products-section{
+    padding: 2rem;
+    text-align: center;
+}
+
+.card-container{
+    display: flex;
+    flex-wrap: wrap;
+    gap:20px;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+.card{
+    background: white;
+    width:200px;
+    box-shadow:0 0 8ps rgba(0,0,0,0.1);
+    padding: 1rem;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.card:hover{
+    transform: scale(1.03);
+}
+
+.card img{
+    width: 100%;
+    height:270px;
+    object-fit: cover;
+}
+
+.desc-box{
+    margin: 2rem;
+    padding: 1rem;
+    background: #f3eaf5;
+    border-left:5px solid #72026c;
+}
+
+.hidden{
+    display: none;
+}
