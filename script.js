@@ -44,12 +44,10 @@ products.forEach((p) => {
   `;
 
   card.onclick = () => {
-    // Collapse all cards except the one clicked
     document.querySelectorAll(".card").forEach(c => {
       if (c !== card) c.classList.remove("expanded");
     });
 
-    // Toggle current card description
     card.classList.toggle("expanded");
   };
 
