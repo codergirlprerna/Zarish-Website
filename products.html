@@ -1,49 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Products - Zarish</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Products</title>
+  <link rel="stylesheet" href="style.css"> <!-- your CSS file -->
 </head>
 <body>
-  <nav class="navbar">
-    <div class="logo">
-      <img src="zarish.jpg" alt="logo image" />
-      <span>ZARISH</span>
-    </div>
-    <ul class="nav-links">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="products.html">Product</a></li>
-      <li><a href="#">About Us</a></li>
-    </ul>
-    <div class="search-box">
-      <input type="text" placeholder="Search products..." />
-      <button>🔍</button>
-    </div>
-  </nav>
+  <h1>Our Products</h1>
+  <div id="product-list" class="product-container">
+    <!-- Products will be injected here -->
+  </div>
 
-  <header class="hero">
-    <h1>Our Exclusive Collection</h1>
-    <p>Explore handcrafted pieces curated for elegance and tradition</p>
-  </header>
+  <script>
+    // Fetch products from Strapi
+    async function fetchProducts() {
+      try {
+        const response = await fetch("http://localhost:1337/api/products?populate=*"); 
+        const data = await response.json();
+        const products = data.data; 
 
-  <section class="products-section">
-    <h2>All Products</h2>
-    <div class="card-container" id="product-list">
-      <div class="card">
-        <img src="https://seemagujral.com/cdn/shop/files/3_92ebd1fa-c245-418b-979f-7096a795fc16_900x.png?v=1733393689" alt="Ghararas" />
-        <h4>Ghararas</h4>
-        <p class="description">Elegant handcrafted Ghararas made with premium embroidery.</p>
-      </div>
+        const productList = document.getElementById("product-list");
+        productList.innerHTML = ""; // clear before inserting
 
-      <div class="card">
-        <img src="https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcS6KjwJXrgCGa6SQhDBZFjtURgBpEvemP3S6-KlGy9_2lEzqSBG-zezhg6CNVKBr9j4aeOm0Sg66LLmEt8UedCbc1QxWXm_ZrB4dEMywyJD" alt="Lehengas" />
-        <h4>Lehengas</h4>
-        <p class="description">Luxurious bridal Lehengas designed for your special day.</p>
-      </div>
+        products.forEach(product => {
+          const attributes = product.attributes;
 
-    </div>
-  </section>
+          // If image exists
+          const imageUrl = attributes.image?.data?.attributes?.url 
+                           ? `http://localhost:1337${attributes.image.data.attributes.url}` 
+                           : "placeholder.jpg";
+
+          // Create HTML card
+          const productCard = `
+            <div class="product-card">
+              <img src="${imageUrl}" alt="${attributes.title}" />
+              <h2>${attributes.title}</h2>
+              <p>${attributes.description}</p>
+              <p><strong>Price:</strong> ₹${attributes.price}</p>
+            </div>
+          `;
+
+          productList.innerHTML += productCard;
+        });
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      }
+    }
+
+    // Call function on page load
+    fetchProducts();
+  </script>
 </body>
 </html>

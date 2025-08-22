@@ -1,55 +1,55 @@
-const products = [
-  {
-    name: "Ghararas",
-    image: "https://seemagujral.com/cdn/shop/files/3_92ebd1fa-c245-418b-979f-7096a795fc16_900x.png?v=1733393689",
-    description: "Elegant handcrafted Ghararas made with premium embroidery.",
-  },
-  {
-    name: "Lehengas",
-    image: "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcS6KjwJXrgCGa6SQhDBZFjtURgBpEvemP3S6-KlGy9_2lEzqSBG-zezhg6CNVKBr9j4aeOm0Sg66LLmEt8UedCbc1QxWXm_ZrB4dEMywyJD",
-    description: "Luxurious bridal Lehengas designed for your special day.",
-  },
-  {
-    name: "Sherwanis",
-    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQIlD5XoO2vnQrgQlQjMdHzPc0WoDCE0LU-aA&s",
-    description: "Classic Sherwanis showcasing royal aesthetics.",
-  },
-  {
-    name: "Kurtas",
-    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSt7nfHLpA-SkjRO-Prs4MrWxbDPRGapp-f2Q&s",
-    description: "Handcrafted Kurtas with rich patterns and elegance.",
-  },
-  {
-    name: "Designer Suits",
-    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRo9EAMOgAyESken8VldcP6xCLJSZAa-l9pUQ&s",
-    description: "Designer suits tailored with intricate hand embroidery.",
-  },
-  {
-    name: "Calligraphy Frames",
-    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRrAYk4Zh4pMtIqqaw_CR5iVPZ2fKXsk0zhaA&s",
-    description: "Decorative calligraphy wall frames with intricate threads.",
-  },
-];
-
 const container = document.getElementById("card-container");
 
-products.forEach((p) => {
-  const card = document.createElement("div");
-  card.className = "card";
+async function loadProducts() {
+  try {
+    const response = await fetch("http://localhost:1337/api/products?populate=*");
+    const result = await response.json();
 
-  card.innerHTML = `
-    <img src="${p.image}" alt="${p.name}" />
-    <h4>${p.name}</h4>
-    <p class="description">${p.description}</p>
-  `;
+    const products = result.data || [];
+    container.innerHTML = "";
 
-  card.onclick = () => {
-    document.querySelectorAll(".card").forEach(c => {
-      if (c !== card) c.classList.remove("expanded");
+    products.forEach((item) => {
+      const p = item || {}; // Use item directly
+
+      // Extract description safely
+      let description = "";
+      if (Array.isArray(p.description) && p.description.length > 0) {
+        description = p.description[0]?.children?.[0]?.text || "";
+      }
+
+      // Handle image
+      let imageUrl = "https://via.placeholder.com/200"; // fallback
+      if (p.image?.formats?.medium?.url) {
+        imageUrl = "http://localhost:1337" + p.image.formats.medium.url;
+      } else if (p.image?.url) {
+        imageUrl = "http://localhost:1337" + p.image.url;
+      }
+
+      const card = document.createElement("div");
+      card.className = "card";
+      card.innerHTML = `
+        <img src="${imageUrl}" alt="${p.name || 'Product'}" />
+        <h4>${p.name || 'No Name'}</h4>
+        <p class="description">${description}</p>
+        <p><strong>Price:</strong> ₹${p.price || '0'}</p>
+        <a href="https://wa.me/${p.ownerwhatsappnumber || ''}?text=I want to buy ${encodeURIComponent(p.name || '')}" 
+           target="_blank" 
+           class="whatsapp-btn">💬 Contact on WhatsApp</a>
+      `;
+
+      card.onclick = () => {
+        document.querySelectorAll(".card").forEach((c) => {
+          if (c !== card) c.classList.remove("expanded");
+        });
+        card.classList.toggle("expanded");
+      };
+
+      container.appendChild(card);
     });
+  } catch (error) {
+    console.error("Error fetching products:", error);
+    container.innerHTML = "<p>Failed to load products. Please try again later.</p>";
+  }
+}
 
-    card.classList.toggle("expanded");
-  };
-
-  container.appendChild(card);
-});
+loadProducts();
